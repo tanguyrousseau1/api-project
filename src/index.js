@@ -6,18 +6,10 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const {startDatabase} = require('./database/mongo');
 const {insertNews, getNews} = require('./database/news');
+const {insertUser, getUser} = require('./database/user');
 
 const app = express();
 
-//array to work as temporary db
-const user = [
-    {
-        username: "Naty",
-        email: "Naty@gmail.com",
-        birthday: new Date("2022-09-21"),
-        description: "Owner and Developper"
-    }
-]
 
 //enabling modules on express app
 app.use(helmet());
@@ -32,8 +24,8 @@ app.get('/', (req, res) => {
 app.get('/news', async (req,res) => {
     res.send(await getNews());
 });
-app.get('/user', (req,res) => {
-    res.send(user);
+app.get('/user', async (req,res) => {
+    res.send(await getUser());
 });
 
 //start in-memory mongoDB instance
@@ -43,6 +35,12 @@ startDatabase().then(async () => {
         content: 'Content for the first news article',
         date: new Date("2022-01-11")
     });
+    await insertUser({
+        username: "Naty",
+        email: "Naty@gmail.com",
+        birthday: new Date("2022-09-21"),
+        description: "Owner and Developper"
+    })
 
     //starting server
     app.listen(3001, () => {
