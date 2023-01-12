@@ -4,18 +4,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const {startDatabase} = require('./database/mongo');
+const {insertNews, getNews} = require('./database/news');
 
 const app = express();
 
 //array to work as temporary db
-const news = [
-    {
-        title: 'News article 1',
-        content: 'Content for the first news article',
-        date: new Date("2022-01-11")
-    }
-]
-
 const user = [
     {
         username: "Naty",
@@ -35,14 +29,24 @@ app.use(morgan('combined'));
 app.get('/', (req, res) => {
     res.send("this is the root endpoint")
 });
-app.get('/news', (req,res) => {
-    res.send(news);
+app.get('/news', async (req,res) => {
+    res.send(await getNews());
 });
 app.get('/user', (req,res) => {
     res.send(user);
 });
 
-//starting server
-app.listen(3001, () => {
-    console.log('listening on port 3001');
-});
+//start in-memory mongoDB instance
+startDatabase().then(async () => {
+    await insertNews({
+        title: 'News article 1',
+        content: 'Content for the first news article',
+        date: new Date("2022-01-11")
+    });
+
+    //starting server
+    app.listen(3001, () => {
+        console.log('listening on port 3001');
+    });
+})
+
