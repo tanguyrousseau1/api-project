@@ -1,0 +1,19 @@
+{
+  "name": "api-project",
+  "version": "1.0.0",
+  "description": "api project for backend web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanguyrousseau1/api-project-backend-web.git"
+  },
+  "author": "Tanguy Rousseau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tanguyrousseau1/api-project-backend-web/issues"
+  },
+  "homepage": "https://github.com/tanguyrousseau1/api-project-backend-web#readme"
+}
