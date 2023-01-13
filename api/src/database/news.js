@@ -11,7 +11,11 @@ async function insertNews(news) {
 
 async function getNews() {
     const database = await getDatabase();
-    return await database.collection(collectionName).find({}).toArray();
+    data = await database.collection(collectionName).find({}).toArray();
+    jsondata = {
+        "data": data
+    };
+    return jsondata;
 }
 
 async function deleteNews(id) {
