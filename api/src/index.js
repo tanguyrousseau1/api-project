@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
     res.send("this is the root endpoint")
 });
 app.get('/news', async (req,res) => {
-    res.send(await getNews());
+    res.json(await getNews());
 });
 app.get('/user', async (req,res) => {
     res.send(await getUser());
